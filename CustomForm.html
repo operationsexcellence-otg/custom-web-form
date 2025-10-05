@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Safety Observation Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #18b64d;
+      --secondary-color: #6c757d;
+      --background-color: #f4f7fa;
+      --card-background: #ffffff;
+      --border-radius: 12px;
+    }
+    body {
+      background: var(--background-color);
+      font-family: 'Inter', sans-serif;
+      padding: 20px 0;
+    }
+    .form-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      padding: 40px;
+      border-top: 5px solid var(--primary-color);
+    }
+    .form-title {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #343a40;
+      font-size: 2rem;
+    }
+    .form-subtitle {
+      text-align: center;
+      color: var(--secondary-color);
+      margin-bottom: 30px;
+    }
+    .form-label { font-weight: 600; color: #495057; }
+    .form-control, .form-select, .form-control:focus, .form-select:focus {
+      border-radius: 8px;
+      border-color: #e9ecef; 
+      padding: 10px 15px;
+    }
+    .form-control:focus, .form-select:focus {
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+    }
+    .btn-primary {
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 12px 20px;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+    }
+    .hidden { display: none !important; }
+    #loadingSpinner {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      color: var(--primary-color);
+    }
+    .form-check-input:checked {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    .info-card {
+      border: 1px solid #dee2e6;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+    .info-card-header {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      border-bottom: 1px dashed #e9ecef;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-container">
+    <h2 class="form-title"><i class="bi bi-shield-check me-2"></i> Safety Observation Form</h2>
+    <p class="form-subtitle">Report hazards, positive practices, or issues promptly and effectively.</p>
+
+    <form id="safetyForm">
+      <!-- Reporter Details -->
+      <div class="info-card">
+        <div class="info-card-header"><i class="bi bi-person-circle me-2"></i> Reporter Details</div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="reporterName" name="reporterName" placeholder="e.g., Jane Doe">
+          <label for="reporterName">Reporter's Name (Optional)</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select id="reporterSite" class="form-select" required>
+            <option value="" disabled selected>Select Site</option>
+            <option>Batam</option><option>Billerica</option><option>Boulder</option>
+            <option>Manila</option><option>Montreal</option><option>Singapore</option><option>Toronto</option>
+          </select>
+          <label for="reporterSite">Reporter Site <span class="text-danger">*</span></label>
+        </div>
+        <div class="form-floating mb-3">
+          <select id="reporterLocation" class="form-select" required>
+            <option value="" disabled selected>Select Location</option>
+          </select>
+          <label for="reporterLocation">Reporter Location <span class="text-danger">*</span></label>
+        </div>
+      </div>
+
+      <!-- Observation Details -->
+      <div class="info-card">
+        <div class="info-card-header"><i class="bi bi-eye-fill me-2"></i> Observation Details</div>
+        <div class="form-floating mb-3">
+          <select id="observationLocation" class="form-select" required>
+            <option value="" disabled selected>Select Location</option>
+          </select>
+          <label for="observationLocation">Observation Location <span class="text-danger">*</span></label>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label for="observationDate" class="form-label">Observation Date <span class="text-danger">*</span></label>
+            <input type="date" class="form-control" id="observationDate" required>
+          </div>
+          <div class="col-md-6">
+            <label for="hazardType" class="form-label">Hazard or Issue Type</label>
+            <select id="hazardType" class="form-select">
+              <option value="" selected>Select Type</option>
+              <option>Materials: Chemicals / Spill / Fire Risk</option>
+              <option>Energy: Electrical / Compressed Air or Gases</option>
+              <option>Eye Washes / Showers / Fire Extinguishers / Exits</option>
+              <option>Slips / Trips / Cut Risks / Noise / Wildlife</option>
+              <option>Machinery: Machines, Equipment and Tools</option>
+              <option>Ergonomics / Lifting / Storage</option>
+              <option>Signs / Labels / PPE</option>
+              <option>General: Unsafe Actions or Situations, Failure to Observe Safety Protocols, Other</option>
+              <option>Security / Emergency Communication</option>
+              <option>Positives / Best Practices</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="observationDetails" class="form-label">Observation Details <span class="text-danger">*</span></label>
+          <textarea class="form-control" id="observationDetails" rows="4" placeholder="Describe what you observed..." required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="attachment" class="form-label">Attachment (Photo/Document)</label>
+          <input class="form-control" type="file" id="attachment">
+        </div>
+      </div>
+
+      <!-- Resolution Section -->
+      <div class="info-card">
+        <div class="info-card-header"><i class="bi bi-tools me-2"></i> Action & Resolution</div>
+        <div class="mb-3">
+          <label class="form-label">Was the issue resolved immediately? <span class="text-danger">*</span></label><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="issueResolved" id="resolvedYes" value="Yes" required>
+            <label class="form-check-label" for="resolvedYes">Yes, resolved on the spot</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="issueResolved" id="resolvedNo" value="No">
+            <label class="form-check-label" for="resolvedNo">No, action is pending</label>
+          </div>
+        </div>
+        <div class="mb-3 hidden" id="resolutionField">
+          <label for="resolution" class="form-label">Resolution Details</label>
+          <textarea class="form-control" id="resolution" rows="3" placeholder="Describe the corrective action taken."></textarea>
+        </div>
+        <div class="mb-3 hidden" id="suggestedSolutionField">
+          <label for="suggestedSolution" class="form-label">Suggested Solution</label>
+          <textarea class="form-control" id="suggestedSolution" rows="3" placeholder="Suggest a fix or preventative action."></textarea>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+          <i class="bi bi-send-fill me-2"></i> Submit Observation
+        </button>
+        <div id="loadingSpinner" class="d-flex justify-content-center align-items-center hidden">
+          <div class="spinner-border text-primary" role="status"></div>
+          <span class="ms-2 text-primary">Submitting your observation... Please wait.</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const siteLocations = {
+        "Batam": ["AIS - Back Line IRD","AIS - Back Line TP + SMT","AIS - Front Line","AIS - FTC","AIS - Wafer Fab","LSM Lighting - Analytical","LSM Lighting - Cermax","LSM Lighting - IPL 209","LSM Lighting - Photonic","LSM Lighting - PID","LSM Lighting - Spark","LSM Lighting - TC","LSM Optics - Optics","Ops IDL","Other IDL","P&L - Store Lot 207","P&L - Store Lot 209"],
+        "Billerica": ["ALS - Modules","ALS - Systems","ALS - Wafer Fab","HVP","Ops IDL","Other IDL"],
+        "Boulder": ["Cost & Assembly - Assembly & Vessel","Cost & Assembly - Class 5","Cost & Assembly - Ebeam Coat","Cost & Assembly - IBS Coat","Cost & Assembly - Orbotech","Fabrication - CNC & DT","Fabrication - P&F","Fabrication - RLG","Fabrication - TGP & IR/LO","Ops IDL","Other IDL"],
+        "Manila": ["Manufacturing - Headers","Manufacturing - HPS","Manufacturing - HVP","Manufacturing - Lead frames","Manufacturing - Modules","Manufacturing - PDA","Ops IDL","Other IDL"],
+        "Montreal": ["Assemblage - Assemblage auto","Assemblage - Assemblage manual","Assemblage - Marguage Scellage test","Assemblage - QC","Assemblage - QCM","Assemblage - SPCM","M-O inder. Autre","M-O inder. Oper","Ops IDL","Other IDL","Water Fab - Backend","Water Fab - III-V","Water Fab - Silicium"],
+        "Singapore": ["Assembly - Assembly","Backend - Bonding","Backend - Coating","Backend - Flatwork","Frontend - Edging","Frontend - IR","Frontend - Main Line","Frontend - SPDT","Machine Shop","Ops IDL","Other IDL"],
+        "Toronto": ["Operations - Production","Operations - Quality","Ops IDL","Other IDL"]
+};
+
+const form = document.getElementById('safetyForm');
+const submitBtn = document.getElementById('submitBtn');
+const loadingSpinner = document.getElementById('loadingSpinner');
+const resolvedYes = document.getElementById('resolvedYes');
+const resolvedNo = document.getElementById('resolvedNo');
+const resolutionField = document.getElementById('resolutionField');
+const suggestedSolutionField = document.getElementById('suggestedSolutionField');
+const siteSelect = document.getElementById('reporterSite');
+const locationSelect = document.getElementById('reporterLocation');
+const observationLocation = document.getElementById('observationLocation');
+const attachmentInput = document.getElementById('attachment');
+
+function populateLocations() {
+  const selectedSite = siteSelect.value;
+  const locations = siteLocations[selectedSite] || [];
+  locationSelect.innerHTML = '<option value="" disabled selected>Select Location</option>';
+  observationLocation.innerHTML = '<option value="" disabled selected>Select Location</option>';
+  locations.forEach(loc => {
+    const opt = new Option(loc, loc);
+    locationSelect.add(opt.cloneNode(true));
+    observationLocation.add(opt.cloneNode(true));
+  });
+}
+
+function toggleResolutionFields() {
+  if (resolvedYes.checked) {
+    resolutionField.classList.remove('hidden');
+    suggestedSolutionField.classList.add('hidden');
+  } else if (resolvedNo.checked) {
+    suggestedSolutionField.classList.remove('hidden');
+    resolutionField.classList.add('hidden');
+  } else {
+    resolutionField.classList.add('hidden');
+    suggestedSolutionField.classList.add('hidden');
+  }
+}
+
+window.onload = () => {
+  locationSelect.disabled = true;
+  observationLocation.disabled = true;
+};
+siteSelect.addEventListener('change', () => {
+  populateLocations();
+  locationSelect.disabled = false;
+  observationLocation.disabled = false;
+});
+document.querySelectorAll('input[name="issueResolved"]').forEach(el => {
+  el.addEventListener('change', toggleResolutionFields);
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.classList.add('hidden');
+  loadingSpinner.classList.remove('hidden');
+
+  const payload = {
+    reporterName: form.reporterName.value,
+    reporterSite: form.reporterSite.value,
+    reporterLocation: form.reporterLocation.value,
+    observationLocation: form.observationLocation.value,
+    observationDetails: form.observationDetails.value,
+    observationDate: form.observationDate.value,
+    issueResolved: document.querySelector('input[name="issueResolved"]:checked')?.value || '',
+    resolution: resolvedYes.checked ? form.resolution.value : '',
+    suggestedSolution: resolvedNo.checked ? form.suggestedSolution.value : '',
+    hazardType: form.hazardType.value
+  };
+
+  if (attachmentInput.files.length > 0) {
+    const file = attachmentInput.files[0];
+    payload.attachment = {
+      name: file.name,
+      contentBytes: await toBase64(file)
+    };
+  }
+
+  const flowUrl = "https://default2e0f74ad066f44ea9cf9557b3c2f8d.49.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d2d02b33e70a438db8acfacd07a3a261/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vlmoy9IppuF6HDgC8rzPewRAr4UqO2rMKNHY3p35n60"; 
+
+  try {
+    const response = await fetch(flowUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      alert("✅ Safety Observation submitted successfully!");
+      form.reset();
+      toggleResolutionFields();
+      locationSelect.disabled = true;
+      observationLocation.disabled = true;
+    } else {
+      throw new Error(`HTTP ${response.status}`);
+    }
+  } catch (error) {
+    alert("⚠️ Submission failed. Please check your connection or Power Automate URL.");
+    console.error(error);
+  } finally {
+    loadingSpinner.classList.add('hidden');
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('hidden');
+  }
+});
+
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result.split(',')[1]); // Strip metadata
+    reader.onerror = reject;
+  });
+}
+</script>
+
+</body>
+</html>
